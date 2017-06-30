@@ -40,6 +40,7 @@ def turn(board: Board) -> Board:
 
 
 def board_batch(board: Board, x, y, x_size, y_size) -> pyglet.graphics.Batch:
+    """Create batch of vertices from board for later rendering"""
     batch = pyglet.graphics.Batch()
     width_coef = x_size // board.width
     height_coef = y_size // board.height
@@ -66,6 +67,7 @@ board[4][4] = Cell.ALIVE
 print(board)
 print(neighbors(board, 1, 2))
 def helper(dt):
+    """Horrible hack to hook up Game of Life to pyglet clock"""
     global board
     board = turn(board)
     # print("Turn!")
@@ -74,7 +76,8 @@ pyglet.clock.schedule_interval(helper, 1)
 
 
 @window.event
-def on_draw():
+def on_draw() -> None:
+    """Redraws screen every time it's called"""
     window.clear()
     batch = board_batch(board, 10, 10, 400, 400)
     batch.draw()
